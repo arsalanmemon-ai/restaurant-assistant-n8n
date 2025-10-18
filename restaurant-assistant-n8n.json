@@ -1,0 +1,398 @@
+{
+  "name": "restaurant-assistant-n8n",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -336,
+        -320
+      ],
+      "id": "cf8dc924-4178-466a-8549-2d0e09d67f45",
+      "name": "When chat message received",
+      "webhookId": "84f674f1-baf4-4168-ac5b-a5249e237aea"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "you are AI Assitant",
+          "batching": {}
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        128,
+        -320
+      ],
+      "id": "bef1a01d-b3fa-4423-b49b-5b361da9747c",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -96
+      ],
+      "id": "37026a6a-48d0-4c87-a128-f4fc960bb681",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "TI8Q08Xxyk73j2EE",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        -64
+      ],
+      "id": "12f76ae5-0b3c-4c13-89bf-cd347c0ea5d6",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU",
+          "mode": "list",
+          "cachedResultName": "restaurant_management",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 50362611,
+          "mode": "list",
+          "cachedResultName": "Menu",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit#gid=50362611"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        144,
+        -96
+      ],
+      "id": "e81a4cf0-d844-45b2-94de-ac3828e37d3b",
+      "name": "Menu",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "WFJgCBPruYOkC7j6",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU",
+          "mode": "list",
+          "cachedResultName": "restaurant_management",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 880564169,
+          "mode": "list",
+          "cachedResultName": "FAQs",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit#gid=880564169"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        -96
+      ],
+      "id": "8c3a87ef-f4af-49ad-8176-5d2a98770a54",
+      "name": "Get FAQs",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "WFJgCBPruYOkC7j6",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU",
+          "mode": "list",
+          "cachedResultName": "restaurant_management",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1276142579,
+          "mode": "list",
+          "cachedResultName": "Orders",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit#gid=1276142579"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Order ID": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Order_ID', ``, 'string') }}",
+            "Customer Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Customer_Name', ``, 'string') }}",
+            "Phone Number": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_Number', ``, 'string') }}",
+            "Food Item": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Food_Item', ``, 'string') }}",
+            "Quantity": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Quantity', ``, 'string') }}",
+            "Price (PKR)": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Price__PKR_', ``, 'string') }}",
+            "Delivery Address": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Delivery_Address', ``, 'string') }}",
+            "Order Time": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Order_Time', ``, 'string') }}",
+            "Status": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Status', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Order ID",
+              "displayName": "Order ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Customer Name",
+              "displayName": "Customer Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Food Item",
+              "displayName": "Food Item",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Price (PKR)",
+              "displayName": "Price (PKR)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Delivery Address",
+              "displayName": "Delivery Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Order Time",
+              "displayName": "Order Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        400,
+        -96
+      ],
+      "id": "8d1ee2f0-c921-4b9a-9ecc-35ec6d497efd",
+      "name": "Order Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "WFJgCBPruYOkC7j6",
+          "name": "Unnamed credential"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU",
+          "mode": "list",
+          "cachedResultName": "restaurant_management",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 559187833,
+          "mode": "list",
+          "cachedResultName": "Daily Report",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1j5Ywy7sR1PjIUQDzzdMMrYntEnw410y87JB9366gviU/edit#gid=559187833"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        528,
+        -96
+      ],
+      "id": "62673157-f78e-4ea2-9a60-b098d94e6893",
+      "name": "Daily Report",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "WFJgCBPruYOkC7j6",
+          "name": "Unnamed credential"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Menu": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get FAQs": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Sheet": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Daily Report": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0a55a3ce-a14a-4a68-8349-651bd3e9c30b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7c2d36da011cea2f2c21753cd205669a2de9e01da154d274f2b35aceaa1ba6ae"
+  },
+  "id": "zAv8nvkpiHqb7tie",
+  "tags": []
+}
